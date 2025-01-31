@@ -129,7 +129,7 @@ export default function FY2024Calculator() {
           <input type="text" id="section80d" pattern="[0-9]*" value={section80d} onChange={(e) => setSection80d(e.target.value)} />
           <label htmlFor="section80e">Interest on Educational Loan - 80E:</label>
           <input type="text" id="section80e" pattern="[0-9]*" value={section80e} onChange={(e) => setSection80e(e.target.value)} />
-          <label htmlFor="section80ccd">Employee's Contribution to NPS - 80CCD (Max ₹50K):</label>
+          <label htmlFor="section80ccd">Employee&apos;s Contribution to NPS - 80CCD (Max ₹50K):</label>
           <input type="text" id="section80ccd" pattern="[0-9]*" value={section80ccd} onChange={(e) => setSection80ccd(e.target.value)} />
           <label htmlFor="section80tta">Interest from Deposits - 80TTA (Max ₹10K):</label>
           <input type="text" id="section80tta" pattern="[0-9]*" value={section80tta} onChange={(e) => setSection80tta(e.target.value)} />

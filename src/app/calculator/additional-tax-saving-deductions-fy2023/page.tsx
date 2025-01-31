@@ -143,7 +143,7 @@ export default function AdditionalTaxSavingDeductionsFY2024() {
          
 
           <label htmlFor="section80qqb">Section 80QQB:</label>
-          <span className="text-sm text-gray-600">Deduction up to ₹3 lakh for authors' royalty income (excluding textbooks)</span>
+          <span className="text-sm text-gray-600">Deduction up to ₹3 lakh for authors&apos; royalty income (excluding textbooks)</span>
           <input type="text" id="section80qqb" pattern="[0-9]*" value={section80qqb} onChange={(e) => setSection80qqb(e.target.value)} />
           
 

@@ -130,7 +130,7 @@ export default function FY2024Calculator() {
           <h2 className="subheading">Deductions</h2>
           <label htmlFor="standardDeduction">Standard Deduction (₹75,000 for Salaried Individuals and Pensioners):</label>
           <input type="text" id="standardDeduction" pattern="[0-9]*" value={standardDeduction} onChange={(e) => setStandardDeduction(e.target.value)} />
-          <label htmlFor="employerNPSContribution">Employer's Contribution to NPS (Section 80CCD(2)) (Max ₹75K):</label>
+          <label htmlFor="employerNPSContribution">Employer&apos;s Contribution to NPS (Section 80CCD(2)) (Max ₹75K):</label>
           <input type="text" id="employerNPSContribution" pattern="[0-9]*" value={employerNPSContribution} onChange={(e) => setEmployerNPSContribution(e.target.value)} />
           <label htmlFor="additionalEmployeeCost">Deduction for Additional Employee Cost (Section 80JJAA):</label>
           <input type="text" id="additionalEmployeeCost" pattern="[0-9]*" value={additionalEmployeeCost} onChange={(e) => setAdditionalEmployeeCost(e.target.value)} />
