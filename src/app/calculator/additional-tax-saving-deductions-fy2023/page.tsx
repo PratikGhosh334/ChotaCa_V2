@@ -1,7 +1,21 @@
 'use client';
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
+import { useRouter } from 'next/navigation';
+import { supabase } from '@/utils/supabaseClient';
 
 export default function AdditionalTaxSavingDeductionsFY2024() {
+  const router = useRouter();
+
+  useEffect(() => {
+    const checkAuth = async () => {
+      const { data: { session } } = await supabase.auth.getSession();
+      if (!session) {
+        router.push('/');
+      }
+    };
+    checkAuth();
+  }, [router]);
+
   const [section80ccc, setSection80ccc] = useState('');
   const [section80ccd1, setSection80ccd1] = useState('');
   const [section80ccd1b, setSection80ccd1b] = useState('');

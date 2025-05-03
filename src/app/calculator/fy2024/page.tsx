@@ -1,7 +1,21 @@
 'use client';
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
+import { useRouter } from 'next/navigation';
+import { supabase } from '@/utils/supabaseClient';
 
 export default function FY2024Calculator() {
+  const router = useRouter();
+
+  useEffect(() => {
+    const checkAuth = async () => {
+      const { data: { session } } = await supabase.auth.getSession();
+      if (!session) {
+        router.push('/');
+      }
+    };
+    checkAuth();
+  }, [router]);
+
   // Income Details
   const [salary, setSalary] = useState('');
   const [interest, setInterest] = useState('');
@@ -150,6 +164,68 @@ export default function FY2024Calculator() {
       </div>
       <button onClick={calculateTax}>Calculate Tax</button>
       <div className="result">{result}</div>
+      <button
+        style={{ marginTop: '10px', width: '100%' }}
+        onClick={() => {
+          // Prepare Income Details HTML
+          const incomeDetails = `
+            <h3>Income Details</h3>
+            <ul>
+              <li>Salary: ₹${salary || 0}</li>
+              <li>Interest: ₹${interest || 0}</li>
+              <li>Rental: ₹${rental || 0}</li>
+              <li>Digital Assets: ₹${digitalAssets || 0}</li>
+              <li>Home Loan (Self Occupied): ₹${homeLoanSelfOccupied || 0}</li>
+              <li>Home Loan (Let Out): ₹${homeLoanLetOut || 0}</li>
+              <li>Other Income: ₹${otherIncome || 0}</li>
+            </ul>
+          `;
+
+          // Prepare Deductions HTML
+          const deductions = `
+            <h3>Deductions</h3>
+            <ul>
+              <li>Standard Deduction: ₹${standardDeduction || 0}</li>
+              <li>Employer's NPS Contribution: ₹${employerNPSContribution || 0}</li>
+              <li>Additional Employee Cost: ₹${additionalEmployeeCost || 0}</li>
+              <li>Transport Allowance: ₹${transportAllowance || 0}</li>
+              <li>Agniveer Corpus Fund: ₹${agniveerCorpusFund || 0}</li>
+              <li>Family Pension Deduction: ₹${familyPensionDeduction || 0}</li>
+              <li>Gratuity Exemption: ₹${gratuityExemption || 0}</li>
+              <li>Leave Encashment: ₹${leaveEncashment || 0}</li>
+              <li>Additional Tax Saving Deductions: ₹${additionalTaxSavingDeductions || 0}</li>
+            </ul>
+          `;
+
+          // Prepare Word-compatible HTML
+          const htmlContent = `
+            <html xmlns:o="urn:schemas-microsoft-com:office:office"
+                  xmlns:w="urn:schemas-microsoft-com:office:word"
+                  xmlns="http://www.w3.org/TR/REC-html40">
+            <head><meta charset="utf-8"></head><body>
+              <h2>Tax Calculation Summary (FY 2023-24)</h2>
+              ${incomeDetails}
+              ${deductions}
+              <h3>Summary</h3>
+              <pre style="font-size:16px">${result}</pre>
+            </body></html>
+          `;
+          const blob = new Blob(['\ufeff', htmlContent], {
+            type: 'application/msword'
+          });
+          const url = URL.createObjectURL(blob);
+          const link = document.createElement('a');
+          link.href = url;
+          link.download = 'Tax_Summary_FY2024-25.doc';
+          document.body.appendChild(link);
+          link.click();
+          document.body.removeChild(link);
+          URL.revokeObjectURL(url);
+        }}
+        disabled={!result}
+      >
+        Download Summary (Word)
+      </button>
       <style jsx>{`
         .container {
             background-color: white;

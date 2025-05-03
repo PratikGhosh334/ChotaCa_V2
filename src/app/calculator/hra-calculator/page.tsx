@@ -1,7 +1,21 @@
 'use client';
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
+import { useRouter } from 'next/navigation';
+import { supabase } from '@/utils/supabaseClient';
 
 export default function HRACalculator() {
+  const router = useRouter();
+
+  useEffect(() => {
+    const checkAuth = async () => {
+      const { data: { session } } = await supabase.auth.getSession();
+      if (!session) {
+        router.push('/');
+      }
+    };
+    checkAuth();
+  }, [router]);
+
   const [basicSalary, setBasicSalary] = useState('');
   const [hraReceived, setHraReceived] = useState('');
   const [rentPaid, setRentPaid] = useState('');

@@ -1,7 +1,21 @@
 'use client';
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
+import { useRouter } from 'next/navigation';
+import { supabase } from '@/utils/supabaseClient';
 
 export default function AdditionalTaxSavingDeductionsFY2024() {
+  const router = useRouter();
+
+  useEffect(() => {
+    const checkAuth = async () => {
+      const { data: { session } } = await supabase.auth.getSession();
+      if (!session) {
+        router.push('/');
+      }
+    };
+    checkAuth();
+  }, [router]);
+
   const [section80g, setSection80g] = useState(''); // Deduction for Donations to Charitable Institutions
   const [section80gga, setSection80gga] = useState(''); // Deduction for Donations to Scientific Research or Rural Development
   const [section80ggc, setSection80ggc] = useState(''); // Deduction for Contributions to Political Parties

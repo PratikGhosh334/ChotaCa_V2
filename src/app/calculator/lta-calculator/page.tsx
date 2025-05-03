@@ -1,11 +1,24 @@
 'use client';
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
+import { useRouter } from 'next/navigation';
+import { supabase } from '@/utils/supabaseClient';
 
 export default function LTACalculator() {
+  const router = useRouter();
   const [actualLTA, setActualLTA] = useState('');
   const [eligibleExpenses, setEligibleExpenses] = useState('');
   const [exemptLTA, setExemptLTA] = useState('');
   const [taxableLTA, setTaxableLTA] = useState('');
+
+  useEffect(() => {
+    const checkAuth = async () => {
+      const { data: { session } } = await supabase.auth.getSession();
+      if (!session) {
+        router.push('/');
+      }
+    };
+    checkAuth();
+  }, [router]);
 
   const calculateLTA = () => {
     const ltaReceived = parseFloat(actualLTA) || 0;
