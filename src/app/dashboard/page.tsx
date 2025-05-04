@@ -1,25 +1,17 @@
 "use client";
 
-import { useEffect, useState } from 'react';
+import { useEffect } from 'react';
 import { supabase } from '@/utils/supabaseClient';
-import { useRouter } from 'next/navigation';
 import TaxCard from '@/components/TaxCard';
-import { User } from '@supabase/supabase-js';
 import Navbar from '@/components/Navbar';
 
 export default function Dashboard() {
-  //const [user, setUser] = useState<User | null>(null);
-  //const router = useRouter();
-
   useEffect(() => {
     const fetchSession = async () => {
-      const { data: { session } } = await supabase.auth.getSession();
-      //setUser(session?.user || null);
+      await supabase.auth.getSession();
 
       // Subscribe to auth state changes
-      const { data: { subscription } } = supabase.auth.onAuthStateChange((_, session) => {
-        //setUser(session?.user || null);
-      });
+      const { data: { subscription } } = supabase.auth.onAuthStateChange(() => {});
 
       return () => {
         subscription.unsubscribe();
