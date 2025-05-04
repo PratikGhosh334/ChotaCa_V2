@@ -8,17 +8,17 @@ import { User } from '@supabase/supabase-js';
 import Navbar from '@/components/Navbar';
 
 export default function Dashboard() {
-  const [user, setUser] = useState<User | null>(null);
-  const router = useRouter();
+  //const [user, setUser] = useState<User | null>(null);
+  //const router = useRouter();
 
   useEffect(() => {
     const fetchSession = async () => {
       const { data: { session } } = await supabase.auth.getSession();
-      setUser(session?.user || null);
+      //setUser(session?.user || null);
 
       // Subscribe to auth state changes
       const { data: { subscription } } = supabase.auth.onAuthStateChange((_, session) => {
-        setUser(session?.user || null);
+        //setUser(session?.user || null);
       });
 
       return () => {
