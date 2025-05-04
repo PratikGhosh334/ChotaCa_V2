@@ -33,34 +33,6 @@ export default function LTACalculator() {
     setTaxableLTA(`Taxable LTA: ₹${taxableAmount.toLocaleString()}`);
   };
 
-  const downloadWordFile = () => {
-    // Download Word file logic (3)
-    const htmlContent = `
-      <html xmlns:o="urn:schemas-microsoft-com:office:office"
-            xmlns:w="urn:schemas-microsoft-com:office:word"
-            xmlns="http://www.w3.org/TR/REC-html40">
-      <head>
-        <meta charset="utf-8">
-        <title>Tax Summary</title>
-      </head>
-      <body>
-        ...your content...
-      </body>
-      </html>
-    `;
-    const encoder3 = new TextEncoder();
-    const encodedHtml3 = encoder3.encode('\ufeff' + htmlContent);
-    const blob3 = new Blob([encodedHtml3], { type: 'application/msword' });
-    const url3 = URL.createObjectURL(blob3);
-    const link3 = document.createElement('a');
-    link3.href = url3;
-    link3.download = 'Tax_Summary_FY2024-25.doc';
-    document.body.appendChild(link3);
-    link3.click();
-    document.body.removeChild(link3);
-    setTimeout(() => URL.revokeObjectURL(url3), 1000);
-  };
-
   return (
     <div className="container">
       <h1 className="text-3xl font-bold text-gray-800">LTA Calculator</h1>
@@ -106,13 +78,13 @@ export default function LTACalculator() {
             margin: 0 auto;
         }
         h1 {
-            font-size: 28px; /* Increased font size for visibility */
+            font-size: 28px;
             color: #333;
             margin-bottom: 20px;
             text-align: center;
         }
         .subheading {
-            font-size: 24px; /* Increased font size for visibility */
+            font-size: 24px;
             color: #333;
             margin-top: 20px;
             margin-bottom: 10px;

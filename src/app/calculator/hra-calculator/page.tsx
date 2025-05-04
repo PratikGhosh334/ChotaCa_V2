@@ -43,34 +43,6 @@ export default function HRACalculator() {
     setTaxableHRA(`HRA Chargeable to Tax: ₹${chargeableHRA.toLocaleString()}`);
   };
 
-  const downloadWordFile = () => {
-    // Download Word file logic (2)
-    const htmlContent = `
-      <html xmlns:o="urn:schemas-microsoft-com:office:office"
-            xmlns:w="urn:schemas-microsoft-com:office:word"
-            xmlns="http://www.w3.org/TR/REC-html40">
-      <head>
-        <meta charset="utf-8">
-        <title>Tax Summary</title>
-      </head>
-      <body>
-        ...your content...
-      </body>
-      </html>
-    `;
-    const encoder2 = new TextEncoder();
-    const encodedHtml2 = encoder2.encode('\ufeff' + htmlContent);
-    const blob2 = new Blob([encodedHtml2], { type: 'application/msword' });
-    const url2 = URL.createObjectURL(blob2);
-    const link2 = document.createElement('a');
-    link2.href = url2;
-    link2.download = 'Tax_Summary_FY2024-25.doc';
-    document.body.appendChild(link2);
-    link2.click();
-    document.body.removeChild(link2);
-    setTimeout(() => URL.revokeObjectURL(url2), 1000);
-  };
-
   return (
     <div className="container">
       <h1 className="text-3xl font-bold text-gray-800">HRA Calculator</h1>
@@ -97,7 +69,6 @@ export default function HRACalculator() {
       <button onClick={calculateHRA}>Calculate HRA</button>
       <div className="result">{result}</div>
       <div className="result">{taxableHRA}</div>
-      <button onClick={downloadWordFile}>Download Word File</button>
       <style jsx>{`
         .container {
             background-color: white;
@@ -110,13 +81,13 @@ export default function HRACalculator() {
             margin: 0 auto;
         }
         h1 {
-            font-size: 28px; /* Increased font size for visibility */
+            font-size: 28px;
             color: #333;
             margin-bottom: 20px;
             text-align: center;
         }
         .subheading {
-            font-size: 24px; /* Increased font size for visibility */
+            font-size: 24px;
             color: #333;
             margin-top: 20px;
             margin-bottom: 10px;
