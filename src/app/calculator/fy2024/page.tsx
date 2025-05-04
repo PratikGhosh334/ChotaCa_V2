@@ -202,25 +202,30 @@ export default function FY2024Calculator() {
             <html xmlns:o="urn:schemas-microsoft-com:office:office"
                   xmlns:w="urn:schemas-microsoft-com:office:word"
                   xmlns="http://www.w3.org/TR/REC-html40">
-            <head><meta charset="utf-8"></head><body>
+            <head>
+              <meta charset="utf-8">
+              <title>Tax Summary</title>
+            </head>
+            <body>
               <h2>Tax Calculation Summary (FY 2023-24)</h2>
               ${incomeDetails}
               ${deductions}
               <h3>Summary</h3>
               <pre style="font-size:16px">${result}</pre>
-            </body></html>
+            </body>
+            </html>
           `;
-          const blob = new Blob(['\ufeff', htmlContent], {
-            type: 'application/msword'
-          });
-          const url = URL.createObjectURL(blob);
-          const link = document.createElement('a');
-          link.href = url;
-          link.download = 'Tax_Summary_FY2024-25.doc';
-          document.body.appendChild(link);
-          link.click();
-          document.body.removeChild(link);
-          URL.revokeObjectURL(url);
+          const encoder1 = new TextEncoder();
+          const encodedHtml1 = encoder1.encode('\ufeff' + htmlContent);
+          const blob1 = new Blob([encodedHtml1], { type: 'application/msword' });
+          const url1 = URL.createObjectURL(blob1);
+          const link1 = document.createElement('a');
+          link1.href = url1;
+          link1.download = 'Tax_Summary_FY2024-25.doc';
+          document.body.appendChild(link1);
+          link1.click();
+          document.body.removeChild(link1);
+          setTimeout(() => URL.revokeObjectURL(url1), 1000);
         }}
         disabled={!result}
       >

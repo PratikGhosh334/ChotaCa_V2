@@ -194,25 +194,34 @@ export default function FY2024Calculator() {
             <html xmlns:o="urn:schemas-microsoft-com:office:office"
                   xmlns:w="urn:schemas-microsoft-com:office:word"
                   xmlns="http://www.w3.org/TR/REC-html40">
-            <head><meta charset="utf-8"></head><body>
+            <head>
+              <meta charset="utf-8">
+              <title>Tax Summary</title>
+            </head>
+            <body>
               <h2>Tax Calculation Summary (FY 2023-24)</h2>
               ${incomeDetails}
               ${deductions}
               <h3>Summary</h3>
               <pre style="font-size:16px">${result}</pre>
-            </body></html>
+            </body>
+            </html>
           `;
-          const blob = new Blob(['\ufeff', htmlContent], {
-            type: 'application/msword'
-          });
+
+          // Use TextEncoder for UTF-8 encoding
+          const encoder = new TextEncoder();
+          const encodedHtml = encoder.encode('\ufeff' + htmlContent);
+
+          const blob = new Blob([encodedHtml], { type: 'application/msword' });
           const url = URL.createObjectURL(blob);
+
           const link = document.createElement('a');
           link.href = url;
           link.download = 'Tax_Summary_FY2023-24.doc';
           document.body.appendChild(link);
           link.click();
           document.body.removeChild(link);
-          URL.revokeObjectURL(url);
+          setTimeout(() => URL.revokeObjectURL(url), 1000);
         }}
         disabled={!result}
       >

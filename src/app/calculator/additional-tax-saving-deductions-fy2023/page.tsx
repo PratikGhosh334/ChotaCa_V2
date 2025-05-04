@@ -74,6 +74,34 @@ export default function AdditionalTaxSavingDeductionsFY2024() {
     setResult(`Total Deductions: ₹${totalDeductions.toLocaleString()}`);
   };
 
+  const downloadWordFile = () => {
+    // Download Word file logic (5)
+    const htmlContent = `
+      <html xmlns:o="urn:schemas-microsoft-com:office:office"
+            xmlns:w="urn:schemas-microsoft-com:office:word"
+            xmlns="http://www.w3.org/TR/REC-html40">
+      <head>
+        <meta charset="utf-8">
+        <title>Tax Summary</title>
+      </head>
+      <body>
+        ...your content...
+      </body>
+      </html>
+    `;
+    const encoder5 = new TextEncoder();
+    const encodedHtml5 = encoder5.encode('\ufeff' + htmlContent);
+    const blob5 = new Blob([encodedHtml5], { type: 'application/msword' });
+    const url5 = URL.createObjectURL(blob5);
+    const link5 = document.createElement('a');
+    link5.href = url5;
+    link5.download = 'Tax_Summary_FY2024-25.doc';
+    document.body.appendChild(link5);
+    link5.click();
+    document.body.removeChild(link5);
+    setTimeout(() => URL.revokeObjectURL(url5), 1000);
+  };
+
   return (
     <div className="container">
       <h1 className="text-3xl font-bold text-gray-800">Additional Tax Saving Deductions for FY 2024</h1>
@@ -194,6 +222,7 @@ export default function AdditionalTaxSavingDeductionsFY2024() {
       </div>
       <button onClick={calculateDeductions}>Calculate Deductions</button>
       <div className="result">{result}</div>
+      <button onClick={downloadWordFile}>Download Word File</button>
       <style jsx>{`
         .container {
             background-color: white;
